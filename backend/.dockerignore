@@ -1,14 +1,46 @@
-.env
+# VCS / editors
 .git
 .gitignore
 .vscode
+.idea
+
+# Python bytecode / envs
 __pycache__
 *.pyc
 *.pyo
 *.pyd
-venv
 .venv
+venv
 env
+.mypy_cache
 .pytest_cache
+.ruff_cache
+
+# Secrets (must NEVER be baked into the image)
+.env
+.env.*
+
+# Templates and docs — not needed at runtime
+.env.example
+README.md
+
+# Runtime data — must not be baked in; mount as volume in production
+data/audit.db
+data/*.db
+data/*.sqlite
+uploads/*
+!uploads/.gitkeep
+
+# Local test artifacts
 tests
 *.log
+tmp
+tmp_*.json
+
+# Dev-only scripts
+create_project.py
+test.py
+
+# Docker itself
+Dockerfile
+.dockerignore

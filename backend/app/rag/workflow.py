@@ -1,4 +1,6 @@
 import logging
+import re
+from pathlib import Path
 from typing import Literal
 from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
@@ -161,9 +163,18 @@ Question: {state['question']}\n\nPrivate KB:\n{context}
     seen = set()
     for d in state["kb_docs"]:
         src = d.metadata.get("source", "Private KB")
-        if src not in seen:
-            seen.add(src)
-            citations.append({"title": src.split("/")[-1], "url": "", "type": "private_kb"})
+        if src in seen:
+            continue
+        seen.add(src)
+        # Extract just the filename (works for both / and \ separators)
+        filename = Path(src).name or src
+        # Turn "company_hr_handbook.md" → "Company HR Handbook"
+        stem = Path(filename).stem
+        pretty = stem.replace("_", " ").replace("-", " ").title()
+        # Preserve common acronyms
+        for acronym in ("HR", "PTO", "FMLA", "IT", "PII"):
+            pretty = re.sub(rf"\b{acronym.title()}\b", acronym, pretty)
+        citations.append({"title": pretty, "source": filename, "url": "", "type": "private_kb"})
     return {"answer": answer, "source_used": "private_kb", "citations": citations, "trace": add_trace(state, "Answer generation → PRIVATE KB")}
 
 

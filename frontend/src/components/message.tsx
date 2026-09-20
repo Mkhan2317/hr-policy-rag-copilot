@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Shield,
   ExternalLink,
+  FileText,
 } from "lucide-react";
 import type { Turn } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -140,34 +141,60 @@ export function Message({ turn }: { turn: Turn }) {
                 <p className="mb-2.5 text-[11px] font-medium uppercase tracking-wider text-muted">
                   Sources
                 </p>
-                <ol className="space-y-2">
-                  {turn.response.citations.map((c, i) => (
-                    <li key={i} className="flex gap-2 text-sm">
-                      <span className="mt-0.5 text-[11px] font-medium text-muted">
-                        {i + 1}.
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        {c.url ? (
-                          <a
-                            href={c.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-1 text-accent hover:underline"
-                          >
-                            {c.title || c.source || c.url}
-                            <ExternalLink className="h-3 w-3 opacity-60" />
-                          </a>
-                        ) : (
-                          <span className="text-foreground">
-                            {c.title || c.source}
-                          </span>
-                        )}
-                        {c.snippet && (
-                          <p className="mt-0.5 text-xs text-muted">{c.snippet}</p>
-                        )}
-                      </div>
-                    </li>
-                  ))}
+                <ol className="space-y-2.5">
+                  {turn.response.citations.map((c, i) => {
+                    const isWeb = Boolean(c.url);
+                    const displayTitle = c.title || c.source || c.url || "Untitled";
+                    let displayHost = "";
+                    if (isWeb && c.url) {
+                      try {
+                        displayHost = new URL(c.url).hostname.replace(/^www\./, "");
+                      } catch {
+                        displayHost = c.url;
+                      }
+                    }
+                    return (
+                      <li key={i} className="flex gap-2.5 text-sm">
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-surface text-[10px] font-medium text-muted">
+                          {i + 1}
+                        </span>
+                        <div className="flex flex-1 min-w-0 items-start gap-2">
+                          {isWeb ? (
+                            <Globe className="mt-0.5 h-3.5 w-3.5 shrink-0 text-info" />
+                          ) : (
+                            <FileText className="mt-0.5 h-3.5 w-3.5 shrink-0 text-success" />
+                          )}
+                          <div className="flex-1 min-w-0">
+                            {isWeb ? (
+                              <a
+                                href={c.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1 text-accent hover:underline"
+                              >
+                                <span className="truncate">{displayTitle}</span>
+                                <ExternalLink className="h-3 w-3 shrink-0 opacity-60" />
+                              </a>
+                            ) : (
+                              <span className="block truncate text-foreground">
+                                {displayTitle}
+                              </span>
+                            )}
+                            {(displayHost || c.source) && (
+                              <p className="mt-0.5 truncate text-[11px] text-muted">
+                                {displayHost || c.source}
+                              </p>
+                            )}
+                            {c.snippet && (
+                              <p className="mt-1 line-clamp-2 text-xs text-muted">
+                                {c.snippet}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ol>
               </div>
             )}
