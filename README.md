@@ -22,6 +22,28 @@ Self-correcting retrieval across a private knowledge base, live web search, and 
 
 ---
 
+## 🎬 Try the demo
+
+**Live URL:** https://hr-policy-rag-copilot-gnfsr.ondigitalocean.app
+
+**Just want to chat?** No login needed — ask about annual leave, remote work, parental leave, or anything else. Answers come from the private KB with citations, or fall back to live web search if the KB is weak.
+
+**Want to test document upload?** Use these demo credentials in the **"Ingest document"** dialog:
+
+```
+Admin API key:  XzkHIxgTBUXe9NxpzDfe2pK2_DrG36eE80I2NlQF_-A
+```
+
+> ⚠️ This is a **portfolio demo**. Please be respectful — the OpenAI/Pinecone quotas are on my personal account. Upload only small text/markdown files (< 1MB). The key will rotate if abused.
+
+**Recommended demo flow (60 seconds):**
+1. Click *"How many annual leave days?"* → 🟢 **KB badge**, cited answer from `Company HR Handbook`
+2. Click *"What are the latest public holiday rules in Bangladesh?"* → 🔵 **Web Search badge**, live Tavily results
+3. Say *"hi"* → 🟣 **Direct badge**, no retrieval
+4. Click **"Agent trace"** below any answer to see the full LangGraph decision path
+
+---
+
 ## What it does
 
 Employees ask HR questions in natural language. A LangGraph-orchestrated agent decides — per question — whether to:
