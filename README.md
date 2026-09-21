@@ -16,6 +16,8 @@ Self-correcting retrieval across a private knowledge base, live web search, and 
 
 ![Project Architecture](docs/architecture.png)
 
+📄 **[Download high-resolution architecture PDF](docs/architecture.pdf)**
+
 </div>
 
 ---
