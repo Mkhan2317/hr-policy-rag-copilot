@@ -14,7 +14,7 @@ Self-correcting retrieval across a private knowledge base, live web search, and 
 
 <br />
 
-![Chat UI](docs/screenshots/empty-state.png)
+![Project Architecture](docs/architecture.png)
 
 </div>
 
@@ -31,15 +31,15 @@ Employees ask HR questions in natural language. A LangGraph-orchestrated agent d
 
 Every response is cited, every reasoning step is visible in the collapsible **agent trace**.
 
-## Architecture
+The router LLM classifies each question. KB retrieval is graded by another LLM; if evidence is weak, the graph falls through to web search, which is also graded before answer generation. Query rewriting kicks in when both sources fail. LangSmith traces every node.
+
+## UI preview
 
 <div align="center">
 
-![Agentic RAG Architecture](docs/architecture.png)
+![Chat UI](docs/screenshots/empty-state.png)
 
 </div>
-
-The router LLM classifies the question. KB retrieval is graded by another LLM; if evidence is weak, the graph falls through to web search, which is also graded before answer generation. Query rewriting kicks in when both sources fail. LangSmith traces every node.
 
 ## Features
 
