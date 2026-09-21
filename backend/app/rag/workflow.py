@@ -166,10 +166,12 @@ Question: {state['question']}\n\nPrivate KB:\n{context}
         if src in seen:
             continue
         seen.add(src)
-        # Extract just the filename (works for both / and \ separators)
-        filename = Path(src).name or src
+        # Handle both Windows (\) and POSIX (/) separators — data may have been
+        # ingested on Windows but is now being served from a Linux container.
+        normalized = src.replace("\\", "/")
+        filename = normalized.rsplit("/", 1)[-1] or src
         # Turn "company_hr_handbook.md" → "Company HR Handbook"
-        stem = Path(filename).stem
+        stem = filename.rsplit(".", 1)[0]
         pretty = stem.replace("_", " ").replace("-", " ").title()
         # Preserve common acronyms
         for acronym in ("HR", "PTO", "FMLA", "IT", "PII"):

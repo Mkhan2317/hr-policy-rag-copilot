@@ -9,17 +9,32 @@ from docx import Document as DocxDocument
 SUPPORTED = {".pdf", ".txt", ".md", ".docx"}
 
 
+def _normalize_metadata(docs: list[Document], path: Path) -> list[Document]:
+    """Store just the filename as source metadata — never the full filesystem path.
+
+    Prevents leaking local paths (like C:\\Users\\...\\file.md) as citation labels
+    when the app is served from a different filesystem later.
+    """
+    filename = path.name
+    for d in docs:
+        d.metadata["source"] = filename
+        d.metadata["filename"] = filename
+    return docs
+
+
 def load_file(path: Path) -> list[Document]:
     suffix = path.suffix.lower()
     if suffix == ".pdf":
-        return PyPDFLoader(str(path)).load()
-    if suffix in {".txt", ".md"}:
-        return TextLoader(str(path), encoding="utf-8").load()
-    if suffix == ".docx":
-        doc = DocxDocument(str(path))
-        text = "\n".join(p.text for p in doc.paragraphs if p.text.strip())
-        return [Document(page_content=text, metadata={"source": str(path)})]
-    raise ValueError(f"Unsupported file type: {suffix}")
+        docs = PyPDFLoader(str(path)).load()
+    elif suffix in {".txt", ".md"}:
+        docs = TextLoader(str(path), encoding="utf-8").load()
+    elif suffix == ".docx":
+        docx = DocxDocument(str(path))
+        text = "\n".join(p.text for p in docx.paragraphs if p.text.strip())
+        docs = [Document(page_content=text, metadata={})]
+    else:
+        raise ValueError(f"Unsupported file type: {suffix}")
+    return _normalize_metadata(docs, path)
 
 
 
