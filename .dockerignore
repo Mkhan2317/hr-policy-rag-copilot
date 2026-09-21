@@ -1,0 +1,53 @@
+# VCS / editors
+.git
+.gitignore
+.vscode
+.idea
+.claude
+
+# Docs / meta
+README.md
+docs
+steps.md
+Agentic-RAG-demo
+
+# Python
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+backend/.venv
+backend/venv
+backend/.mypy_cache
+backend/.pytest_cache
+backend/.ruff_cache
+
+# Node
+frontend/node_modules
+frontend/.next
+frontend/out
+frontend/AGENTS.md
+frontend/CLAUDE.md
+frontend/README.md
+frontend/next-env.d.ts
+**/*.tsbuildinfo
+
+# Secrets — MUST NOT be baked into the image
+**/.env
+**/.env.*
+!**/.env.example
+
+# Runtime data — must not be baked in
+backend/data/audit.db
+backend/data/*.db
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Dev-only scripts
+backend/create_project.py
+backend/test.py
+
+# Docker itself
+Dockerfile
+.dockerignore
+docker-compose.yml

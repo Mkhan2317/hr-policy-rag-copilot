@@ -2,28 +2,32 @@ name: hr-policy-rag-copilot
 region: nyc
 
 services:
-  - name: backend
-    dockerfile_path: backend/Dockerfile
-    source_dir: backend
+  - name: web
+    dockerfile_path: Dockerfile
+    source_dir: /
     github:
       repo: Mkhan2317/hr-policy-rag-copilot
       branch: main
       deploy_on_push: true
     http_port: 8080
     instance_count: 1
-    instance_size_slug: basic-xxs
+    instance_size_slug: apps-s-1vcpu-0.5gb
     health_check:
       http_path: /api/health
+      initial_delay_seconds: 20
     envs:
       - key: APP_ENV
         value: production
+      # Same-origin in unified deploy — CORS effectively unused but kept permissive for API tools
       - key: CORS_ORIGINS
-        value: ${_self.PUBLIC_URL},${frontend.PUBLIC_URL}
+        value: ${APP_URL}
       - key: OPENAI_API_KEY
         type: SECRET
       - key: TAVILY_API_KEY
         type: SECRET
       - key: PINECONE_API_KEY
+        type: SECRET
+      - key: ADMIN_API_KEY
         type: SECRET
       - key: PINECONE_INDEX_NAME
         value: fde-hr-policy-rag
@@ -37,27 +41,10 @@ services:
         value: "4"
       - key: MAX_RETRIES
         value: "1"
-      - key: ADMIN_API_KEY
-        type: SECRET
+      # LangSmith tracing — set LANGSMITH_TRACING=true and add LANGSMITH_API_KEY as SECRET to enable
       - key: LANGSMITH_TRACING
-        value: "true"
-      - key: LANGSMITH_API_KEY
-        type: SECRET
+        value: "false"
       - key: LANGSMITH_PROJECT
         value: hr-policy-rag-copilot
       - key: LANGSMITH_ENDPOINT
         value: https://api.smith.langchain.com
-
-  - name: frontend
-    dockerfile_path: frontend/Dockerfile
-    source_dir: frontend
-    github:
-      repo: Mkhan2317/hr-policy-rag-copilot
-      branch: main
-      deploy_on_push: true
-    http_port: 3000
-    instance_count: 1
-    instance_size_slug: basic-xxs
-    envs:
-      - key: NEXT_PUBLIC_API_URL
-        value: ${backend.PUBLIC_URL}
