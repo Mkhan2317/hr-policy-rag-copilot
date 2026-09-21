@@ -14,7 +14,8 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# Python 'lib/' output dir — scoped to backend to avoid matching frontend/src/lib
+backend/lib/
 lib64/
 parts/
 sdist/
