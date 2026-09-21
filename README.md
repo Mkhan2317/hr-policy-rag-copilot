@@ -14,7 +14,7 @@ Self-correcting retrieval across a private knowledge base, live web search, and 
 
 <br />
 
-![Project Architecture](docs/architecture.png)
+![Project Architecture](docs/architecture-overview.png)
 
 📄 **[Download high-resolution architecture PDF](docs/architecture.pdf)**
 
