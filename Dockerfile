@@ -1,16 +1,25 @@
 # syntax=docker/dockerfile:1
 
 # ---------- Stage 1: Build the Next.js static site ----------
-FROM node:20-alpine AS frontend-builder
+FROM node:20-slim AS frontend-builder
 WORKDIR /build
 
-COPY frontend/package.json frontend/package-lock.json* ./
+# Copy manifest + lockfile first for layer caching
+COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci
 
-COPY frontend/ ./
+# Copy the rest of the frontend explicitly (avoids .dockerignore surprises)
+COPY frontend/tsconfig.json frontend/next.config.ts ./
+COPY frontend/postcss.config.mjs frontend/eslint.config.mjs ./
+COPY frontend/src ./src
+COPY frontend/public ./public
+
 ENV NEXT_TELEMETRY_DISABLED=1
-# Same-origin in production — no NEXT_PUBLIC_API_URL needed (defaults to "")
+# Same-origin in production — NEXT_PUBLIC_API_URL defaults to ""
 RUN npm run build
+
+# Sanity check — fail early if static export didn't produce output
+RUN test -f out/index.html || (echo "ERROR: Next.js static export did not produce out/index.html" && ls -la && exit 1)
 
 # ---------- Stage 2: Python backend + bundled frontend ----------
 FROM python:3.13-slim AS runtime
