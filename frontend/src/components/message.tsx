@@ -14,9 +14,9 @@ import {
   ExternalLink,
   FileText,
 } from "lucide-react";
-import type { Turn } from "@/lib/store";
-import { cn } from "@/lib/utils";
-import { TracePanel } from "@/components/trace-panel";
+import type { Turn } from "../lib/store";
+import { cn } from "../lib/utils";
+import { TracePanel } from "./trace-panel";
 
 function SourceBadge({ source }: { source: string }) {
   const s = source.toLowerCase();

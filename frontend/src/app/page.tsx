@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { askQuestion } from "@/lib/api";
-import { useConversations, newTurnId, type Turn } from "@/lib/store";
-import { Sidebar } from "@/components/sidebar";
-import { Header } from "@/components/header";
-import { EmptyState } from "@/components/empty-state";
-import { Composer } from "@/components/composer";
-import { Message } from "@/components/message";
-import { AdminDialog } from "@/components/admin-dialog";
+import { askQuestion } from "../lib/api";
+import { useConversations, newTurnId, type Turn } from "../lib/store";
+import { Sidebar } from "../components/sidebar";
+import { Header } from "../components/header";
+import { EmptyState } from "../components/empty-state";
+import { Composer } from "../components/composer";
+import { Message } from "../components/message";
+import { AdminDialog } from "../components/admin-dialog";
 
 export default function Home() {
   const {

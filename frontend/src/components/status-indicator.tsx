@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { healthCheck, API_URL } from "@/lib/api";
-import { cn } from "@/lib/utils";
+import { healthCheck, API_URL } from "../lib/api";
+import { cn } from "../lib/utils";
 
 type Status = "checking" | "online" | "offline";
 

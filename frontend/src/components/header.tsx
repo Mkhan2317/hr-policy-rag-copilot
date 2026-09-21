@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, Upload, Plus } from "lucide-react";
-import { StatusIndicator } from "@/components/status-indicator";
+import { StatusIndicator } from "./status-indicator";
 
 type Props = {
   title: string;

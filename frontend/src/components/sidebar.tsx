@@ -1,8 +1,8 @@
 "use client";
 
 import { Plus, MessageSquare, Trash2, Upload, ExternalLink } from "lucide-react";
-import { cn, formatRelativeTime } from "@/lib/utils";
-import type { Conversation } from "@/lib/store";
+import { cn, formatRelativeTime } from "../lib/utils";
+import type { Conversation } from "../lib/store";
 
 type Props = {
   conversations: Conversation[];

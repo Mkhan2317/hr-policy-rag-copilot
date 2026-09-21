@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Upload, FileText, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { ingestDocument } from "@/lib/api";
-import { cn } from "@/lib/utils";
+import { ingestDocument } from "../lib/api";
+import { cn } from "../lib/utils";
 
 type Props = { open: boolean; onClose: () => void };
 

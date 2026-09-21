@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, GitBranch } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 function stepColor(step: string): string {
   const s = step.toLowerCase();
