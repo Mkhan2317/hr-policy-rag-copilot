@@ -34,7 +34,7 @@ Self-correcting retrieval across a private knowledge base, live web search, and 
 Admin API key:  XzkHIxgTBUXe9NxpzDfe2pK2_DrG36eE80I2NlQF_-A
 ```
 
-> ⚠️ This is a **portfolio demo**. Please be respectful — the OpenAI/Pinecone quotas are on my personal account. Upload only small text/markdown files (< 1MB). The key will rotate if abused.
+> ⚠️ This is a **portfolio demo**. Please be respectful — the OpenAI/Pinecone quotas are on my personal account. Supported formats: **PDF, DOCX, TXT, MD** (please keep files under 5 MB / ~100 pages so embedding cost stays reasonable). The admin key will rotate if abused.
 
 **Recommended demo flow (60 seconds):**
 1. Click *"How many annual leave days?"* → 🟢 **KB badge**, cited answer from `Company HR Handbook`
